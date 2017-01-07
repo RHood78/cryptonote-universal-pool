@@ -1,4 +1,4 @@
-var api = "http://54.152.0.2:9117";
+var api = "http://54.152.0.2:9117/upgrade";
 
 var poolHost = "54.152.0.2";
 
