@@ -100,7 +100,7 @@
         "port": 9117,
         "blocks": 30,
         "payments": 30,
-        "password": "sup3rstr0ngP@ssw0rd"
+        "password": "123abc"
     },
 
     "daemon": {
