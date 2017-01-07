@@ -1,6 +1,6 @@
 {
-    "coin": "ducknote",
-    "symbol": "XDN",
+    "coin": "monero",
+    "symbol": "XMR",
     "coinUnits": 100000000,
     "coinDifficultyTarget": 240,
 
@@ -19,34 +19,34 @@
     "poolServer": {
         "enabled": true,
         "clusterForks": "auto",
-        "poolAddress": "ddehi53dwGSBEXdhTYtga2R3fS4y9hRz4YHAsLABJpH75yUd5EDQmuL3yDBj1mG6MMeDfydY9vp4zFVVNQ99FTYq2PpsFJP2y",
+        "poolAddress": "43Ecc6hQ56R4pjDZPv5zLnA733u4usUoQi9ejtPKntqXM2LPZmBTTV1VRZWN5acRvaEqnTs9W44C4afuxbLHytR6FH3XtXW",
         "blockRefreshInterval": 1000,
         "minerTimeout": 900,
         "ports": [
             {
                 "port": 3333,
-                "difficulty": 100,
+                "difficulty": 5000,
                 "desc": "Low end hardware"
             },
             {
                 "port": 5555,
-                "difficulty": 2000,
+                "difficulty": 10000,
                 "desc": "Mid range hardware"
             },
             {
                 "port": 7777,
-                "difficulty": 10000,
+                "difficulty": 20000,
                 "desc": "High end hardware"
             },
             {
                 "port": 8888,
-                "difficulty": 10000,
+                "difficulty": 30000,
                 "desc": "Hidden port",
                 "hidden": true
             }
         ],
         "varDiff": {
-            "minDiff": 100,
+            "minDiff": 5000,
             "maxDiff": 200000,
             "targetTime": 100,
             "retargetTime": 30,
@@ -87,7 +87,7 @@
         "enabled": true,
         "interval": 30,
         "depth": 10,
-        "poolFee": 2,
+        "poolFee": 0.7,
         "devDonation": 0.1,
         "coreDevDonation": 0.1,
         "extraFeaturesDevDonation":0.1
@@ -97,15 +97,15 @@
         "enabled": true,
         "hashrateWindow": 600,
         "updateInterval": 5,
-        "port": 8117,
+        "port": 9117,
         "blocks": 30,
         "payments": 30,
-        "password": "your_password"
+        "password": "sup3rstr0ngP@ssw0rd"
     },
 
     "daemon": {
         "host": "127.0.0.1",
-        "port": 42081
+        "port": 18081
     },
 
     "wallet": {
@@ -115,7 +115,7 @@
 
     "redis": {
         "host": "127.0.0.1",
-        "port": 6379
+        "port": 6739
     },
 
     "monitoring": {

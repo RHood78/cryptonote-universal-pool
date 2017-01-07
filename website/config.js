@@ -1,6 +1,6 @@
 var api = "http://54.152.0.2:9117";
 
-var poolHost = "poolhost.com";
+var poolHost = "54.152.0.2";
 
 var irc = "irc.freenode.net/#poolhost";
 
