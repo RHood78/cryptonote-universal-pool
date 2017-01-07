@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
-    <title>Cryptonote Mining Pool</title>
+    <title>TCPool</title>
 
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -141,7 +141,7 @@
 
     function updateText(elementId, text){
         var el = document.getElementById(elementId);
-        if (el.textContent !== text){
+        if (el == null || el.textContent !== text){
             el.textContent = text;
         }
         return el;
