@@ -88,6 +88,7 @@
         </div>
         <div id="newsPanel" class="panel-collapse collapse in">
           <ul>
+            <li>11-Jan-2017:<br><u>Minimum payment threshold has temporarily been increased to 1XMR.</u> Transaction fees are currently high on RingCT and would take too high of a percent of payouts. The threshold will be reduced as network transaction fees are reduced</li>
             <li>10-Jan-2017:<br>G'day. Apparently we weren't as ready for the hardfork as I had thought.<br>
               The pool went down when the fork block was mined. The issue was resolved by updating the cryptonote-util source code.
             </li>
@@ -327,7 +328,6 @@
             if (xhrGetPayments) xhrGetPayments.abort();
         },
         update: function(){
-            console.log("home.currentPage call.");
             //Add the option to change update frequency.
             $('#networkLastBlockFound').timeago('update', new Date(lastStats.network.timestamp * 1000).toISOString());
 
@@ -341,7 +341,7 @@
 
             if(supports_html5_storage()){
               var state = localStorage.getItem("newsState");
-              if(state == "minimized"){
+              if(state == "minimized" && localStorage.getItem("newsCount") == $('#newsPanel ul li').length){
                 updateText('newsToggle','Show news');
                 $('#newsPanel').collapse();
               } else {
@@ -392,6 +392,7 @@
           updateText('newsToggle','Hide news');
         } else {
           localStorage.setItem("newsState","minimized")
+          localStorage.setItem("newsCount",$('#newsPanel ul li').length);
           updateText('newsToggle','Show news');
         }
       }
