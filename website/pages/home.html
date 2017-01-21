@@ -273,6 +273,7 @@
             <div class="yourStats"><i class="fa fa-money"></i> Total Paid: <span id="yourPaid"></span></div>
             <div class="yourStats"><i class="fa fa-clock-o"></i> Last Share Submitted: <span id="yourLastShare"></span></div>
             <div class="yourStats"><i class="fa fa-tachometer"></i> Hash Rate: <span id="yourHashrateHolder"></span></div>
+            <div class="yourStats"><i class="fa fa-tachometer"></i> Average Hashrate: <span id="yourHashrateAvg"></span></div>
             <div class="yourStats"><i class="fa fa-cloud-upload"></i> Total Hashes Submitted: <span id="yourHashes"></span></div>
         </div>
         <div class="col-sm-4">
@@ -616,6 +617,7 @@
             var avgHash = calcAverageHashrate(userHashrates);
             userGraphStat['hashrate'].normalRangeMin = avgHash-10;
             userGraphStat['hashrate'].normalRangeMax = avgHash+10;
+            updateText('yourHashrateAvg', Math.round(avgHash));
           }
           graphData = getGraphData(data['charts'][chart], chart == 'payments');
 			    userGraphStat[chart].tooltipValueLookups = {names: graphData.names};
