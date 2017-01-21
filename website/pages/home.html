@@ -126,6 +126,7 @@
     <div class="col-md-4 stats marketRate">
         <h3 id="marketHeader">Market Data.</h3>
         <!--https://poloniex.com/public?command=returnTicker  Use for new stats-->
+        <div class="marketFooter">Updated: <span id="marketLastUpdated"></span></div>
         <div class="marketFooter">Powered by <a href="https://poloniex.com">Poloniex</a></div>
     </div>
 </div>
@@ -329,7 +330,8 @@
         },
         update: function(){
             //Add the option to change update frequency.
-            $('#networkLastBlockFound').timeago('update', new Date(lastStats.network.timestamp * 1000).toISOString());
+            if(lastStats.network.timestamp != null)
+              $('#networkLastBlockFound').timeago('update', new Date(lastStats.network.timestamp * 1000).toISOString());
 
             updateText('networkHashrate', getReadableHashRateString(lastStats.network.difficulty / lastStats.config.coinDifficultyTarget) + '/sec');
             updateText('networkDifficulty', lastStats.network.difficulty.toString());
@@ -438,10 +440,10 @@
     var intervalMarketPolling = setInterval(updateMarkets, 60*1000); //poll market data every 1minutes
     var xhrMarketGets = {};
     updateMarkets();
+    var marketTimestamp = Date.now();
 
     function updateMarkets(){
         var completedFetches = 0;
-        var marketsData = [];
         $.get('https://poloniex.com/public?command=returnTicker', function(polodata){
           if(polodata.error) {
             return;
@@ -453,7 +455,8 @@
           $marketHeader.after('<div class="marketTicker">' + 'BTC:USD: <span>' + polodata.USDT_BTC.last + '</span></div>');
           $marketHeader.after('<div class="marketTicker">' + 'BTC:XMR: <span>' + polodata.BTC_XMR.last + '</span></div>');
           $marketHeader.after('<div class="marketTicker">' + 'XMR:USD: <span>' + polodata.USDT_XMR.last + '</span></div>');
-          $('#marketLastUpdated').timeago('update', new Date(marketsData[0].timestamp * 1000).toISOString());
+          $('#marketLastUpdated').timeago('update', new Date(marketTimestamp).toISOString());
+          marketTimestamp = new Date();
         });
     }
 
@@ -590,6 +593,7 @@
     var xhrRenderUserCharts;
 
     function createUserCharts(data) {
+      console.log("User chart update");
 	    for(var chart in userGraphStat) {
 		    if(data['charts'][chart] && data['charts'][chart].length) {
 			    var graphData = getGraphData(data['charts'][chart], chart == 'payments');
