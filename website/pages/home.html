@@ -196,9 +196,12 @@
 		        spotColor: null,
 		        minSpotColor: null,
 		        maxSpotColor: null,
+            normalRangeMin: 0,
+            normalRangeMax: 10000,
+            normalRangeColor: '#aabb55',
 		        highlightLineColor: '#236d26',
 		        spotRadius: 3,
-		        drawNormalOnTop: false,
+		        drawNormalOnTop: true,
 		        chartRangeMin: 0,
 		        tooltipFormat: '<b>{{y}}</b>, {{offset:names}}'
 	        },
@@ -583,7 +586,7 @@
                 }
             });
         }
-        //fetchAddressStats(false);
+        fetchAddressStats(false);
     });
 
     var urlWalletAddress = location.search.split('wallet=')[1] || 0;
@@ -592,11 +595,29 @@
 
     var xhrRenderUserCharts;
 
+    function calcAverageHashrate(chartArray){
+      if(chartArray.length == 0) {
+        return 0;
+      }
+      var totalHashes = 0;
+      //Chart is like [time,hashs,somenum] Somenum might be workers?
+      for(var i=0; i < chartArray.length; i++){
+        totalHashes += chartArray[i][1];
+      }
+      return (totalHashes/chartArray.length);
+    }
+
+    var userHashrates;
     function createUserCharts(data) {
-      console.log("User chart update");
+      userHashrates = data['charts']['hashrate'];
 	    for(var chart in userGraphStat) {
 		    if(data['charts'][chart] && data['charts'][chart].length) {
-			    var graphData = getGraphData(data['charts'][chart], chart == 'payments');
+          if(chart == 'hashrate'){
+            var avgHash = calcAverageHashrate(userHashrates);
+            userGraphStat['hashrate'].normalRangeMin = avgHash-10;
+            userGraphStat['hashrate'].normalRangeMax = avgHash+10;
+          }
+          graphData = getGraphData(data['charts'][chart], chart == 'payments');
 			    userGraphStat[chart].tooltipValueLookups = {names: graphData.names};
 			    $('[data-chart=user_' + chart + ']').show().find('.chart').sparkline(graphData.values, userGraphStat[chart]);
 		    }
@@ -633,7 +654,6 @@
 
 
     /* Show stats of the currency */
-
     function getGraphData (rawData, fixValueToCoins) {
         var graphData = {
             names: [],
@@ -645,7 +665,6 @@
                 graphData.values.push(fixValueToCoins ? getReadableCoins(xy[1], 4, true) : xy[1]);
             }
         }
-
 
         return graphData;
     }
@@ -662,8 +681,8 @@
 
     	    for(var graphType in graphData) {
     		    if(graphData[graphType].values.length > 1) {
-                    var settings = jQuery.extend({}, currencyGraphStat);
-                    settings.tooltipValueLookups = {names: graphData[graphType].names};
+              var settings = jQuery.extend({}, currencyGraphStat);
+              settings.tooltipValueLookups = {names: graphData[graphType].names};
 			        var $chart = $('[data-chart=' + graphType + '] .chart');
 			        $chart.closest('.chartWrap').show();
 			        $chart.sparkline(graphData[graphType].values, settings);
@@ -711,9 +730,6 @@
             $('#cur_profit').html(profitValue);
        }
     }
-
-
-
 
     var xhrRenderCharts;
 
