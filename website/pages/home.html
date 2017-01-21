@@ -337,6 +337,10 @@
             if(lastStats.network.timestamp != null)
               $('#networkLastBlockFound').timeago('update', new Date(lastStats.network.timestamp * 1000).toISOString());
 
+            if(docCookies.getItem('mining_address') != null){
+              fetchAddressStats(false);
+            }
+
             updateText('networkHashrate', getReadableHashRateString(lastStats.network.difficulty / lastStats.config.coinDifficultyTarget) + '/sec');
             updateText('networkDifficulty', lastStats.network.difficulty.toString());
             updateText('blockchainHeight', lastStats.network.height.toString());
@@ -519,76 +523,74 @@
           clearTimeout(addressTimeout);
         }
 
-        function fetchAddressStats(longpoll){
-            xhrAddressPoll = $.ajax({
-                url: api + '/stats_address',
-                data: {
-                    address: address,
-                    longpoll: longpoll
-                },
-                dataType: 'json',
-                cache: 'false',
-                success: function(data){
-                    $('#lookUp > span:last-child').hide();
-                    $('#lookUp > span:first-child').show();
-
-                    if (!data.stats){
-                        $('.yourStats, .userChart').hide();
-                        $('#addressError').text(data.error).show();
-
-                        if (addressTimeout) {
-                          clearTimeout(addressTimeout);
-                        }
-                        addressTimeout = setTimeout(function(){
-                            fetchAddressStats(false);
-                        }, 2000);
-
-                        return;
-                    }
-
-                    $('#addressError').hide();
-
-                    if (data.stats.lastShare)
-                        $('#yourLastShare').timeago('update', new Date(parseInt(data.stats.lastShare) * 1000).toISOString());
-                    else
-                        updateText('yourLastShare', 'Never');
-
-                    updateText('yourHashrateHolder', (data.stats.hashrate || '0 H') + '/sec');
-                    updateText('yourHashes', (data.stats.hashes || 0).toString());
-                    updateText('yourPaid', getReadableCoins(data.stats.paid));
-                    updateText('yourPendingBalance', getReadableCoins(data.stats.balance));
-
-                    renderPayments(data.payments);
-
-                    $('.yourStats').show(function(){
-                        xhrRenderUserCharts = $.ajax({
-                            url: api + '/stats_address?address=' + address + '&longpoll=false',
-                            cache: false,
-                            dataType: 'json',
-                            success: function(data) {
-                                createUserCharts(data);
-                            }
-                        });
-                    });
-
-                    docCookies.setItem('mining_address', address, Infinity);
-                    //fetchAddressStats(true);
-                },
-                error: function(e){
-                    if (e.statusText === 'abort') return;
-                    $('#addressError').text('Connection error').show();
-
-                    if (addressTimeout) clearTimeout(addressTimeout);
-                    addressTimeout = setTimeout(function(){
-                        fetchAddressStats(false);
-                        console.log("543:fetchAddressStats");
-                    }, 2000);
-
-                }
-            });
-        }
         fetchAddressStats(false);
     });
+
+    function fetchAddressStats(longpoll){
+        xhrAddressPoll = $.ajax({
+            url: api + '/stats_address',
+            data: {
+                address: address,
+                longpoll: longpoll
+            },
+            dataType: 'json',
+            cache: 'false',
+            success: function(data){
+                $('#lookUp > span:last-child').hide();
+                $('#lookUp > span:first-child').show();
+
+                if (!data.stats){
+                    $('.yourStats, .userChart').hide();
+                    $('#addressError').text(data.error).show();
+                    return;
+                }
+
+                $('#addressError').hide();
+
+                if (data.stats.lastShare)
+                    $('#yourLastShare').timeago('update', new Date(parseInt(data.stats.lastShare) * 1000).toISOString());
+                else
+                    updateText('yourLastShare', 'Never');
+
+                $('.yourStats').show();
+                updateText('yourHashrateHolder', (data.stats.hashrate || '0 H') + '/sec');
+                updateText('yourHashes', (data.stats.hashes || 0).toString());
+                updateText('yourPaid', getReadableCoins(data.stats.paid));
+                updateText('yourPendingBalance', getReadableCoins(data.stats.balance));
+
+                renderPayments(data.payments);
+
+                createUserCharts(data);
+
+                // $('.yourStats').show(function(){
+                //     xhrRenderUserCharts = $.ajax({
+                //         url: api + '/stats_address?address=' + address + '&longpoll=false',
+                //         cache: false,
+                //         dataType: 'json',
+                //         success: function(data) {
+                //
+                //         }
+                //     });
+                // });
+
+                docCookies.setItem('mining_address', address, Infinity);
+                //I think longpoll "true" below causes it to update if a share is submitted...
+                //fetchAddressStats(true);
+            },
+            error: function(e){
+                if (e.statusText === 'abort')
+                  return;
+                $('#addressError').text('Connection error').show();
+
+                if (addressTimeout)
+                  clearTimeout(addressTimeout);
+                addressTimeout = setTimeout(function(){
+                    fetchAddressStats(false);
+                }, 2000);
+
+            }
+        });
+    }
 
     var urlWalletAddress = location.search.split('wallet=')[1] || 0;
 
