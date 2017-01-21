@@ -145,7 +145,6 @@
         return el;
     }
 
-
     var currentPage;
     var lastStats;
 
@@ -237,7 +236,6 @@
         routePage();
     };
 
-
     function fetchLiveStats() {
         $.ajax({
             url: api + '/live_stats',
@@ -256,7 +254,6 @@
     function floatToString(float) {
         return float.toFixed(6).replace(/[0\.]+$/, '');
     }
-
 
     var xhrPageLoading;
     function routePage(loadedCallback) {
@@ -372,7 +369,5 @@
         open sourced under the <a href="http://www.gnu.org/licenses/gpl-2.0.html">GPL</a>
     </div>
 </footer>
-
-
 </body>
 </html>
