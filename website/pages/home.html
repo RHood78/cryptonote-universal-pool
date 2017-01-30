@@ -470,9 +470,9 @@
 
           var $marketHeader = $('#marketHeader');
           $('.marketTicker').remove();
-          $marketHeader.after('<div class="marketTicker">' + 'BTC:USD: <span>' + polodata.USDT_BTC.last + '</span></div>');
+          $marketHeader.after('<div class="marketTicker">' + 'USDT:BTC: <span>' + polodata.USDT_BTC.last + '</span></div>');
           $marketHeader.after('<div class="marketTicker">' + 'BTC:XMR: <span>' + polodata.BTC_XMR.last + '</span></div>');
-          $marketHeader.after('<div class="marketTicker">' + 'XMR:USD: <span>' + polodata.USDT_XMR.last + '</span></div>');
+          $marketHeader.after('<div class="marketTicker">' + 'USDT:XMR: <span>' + polodata.USDT_XMR.last + '</span></div>');
           $('#marketLastUpdated').timeago('update', new Date(marketTimestamp).toISOString());
           marketTimestamp = new Date();
         });
