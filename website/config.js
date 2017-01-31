@@ -2,11 +2,9 @@ var api = "http://54.152.0.2:8117";
 
 var poolHost = "54.152.0.2";
 
-var irc = "irc.freenode.net/#poolhost";
+var irc = "irc.freenode.net/#monero-pools";
 
 var email = "support@poolhost.com";
-
-var cryptonatorWidget = ["{symbol}-BTC", "{symbol}-USD", "{symbol}-EUR"];
 
 var easyminerDownload = "https://github.com/zone117x/cryptonote-easy-miner/releases/";
 
