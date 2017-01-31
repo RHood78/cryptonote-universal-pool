@@ -236,11 +236,9 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
-
 </div>
 
 <!-- <hr> -->
-
 <div id="miningProfitCalc">
     <h3>Estimate Mining Profits</h3>
     <div id="calcHashHolder">
@@ -290,7 +288,6 @@
             <div class="userChart" data-chart="user_hashrate">
                 <h4>Hash Rate</h4>
                 <div class="chart">
-
                 </div>
             </div>
         </div>
@@ -326,7 +323,6 @@
     <p class="yourStats text-center">
         <button type="button" class="btn btn-default" id="loadMorePayments">Load More</button>
     </p>
-
 </div>
 
 <script>
@@ -378,7 +374,6 @@
 
             //updateText('poolRoundHashes', lastStats.pool.roundHashes.toString());
             updateText('poolMiners', lastStats.pool.miners.toString());
-
 
             var totalFee = lastStats.config.fee;
             if (Object.keys(lastStats.config.donation).length) {
@@ -516,6 +511,7 @@
     $('#lookUp').click(function(){
         var address = $('#yourStatsInput').val().trim();
         if (!address){
+            console.log("Address was empty");
             $('#yourStatsInput').focus();
             return;
         }
@@ -537,6 +533,12 @@
     });
 
     function fetchAddressStats(longpoll){
+        var address = $('#yourStatsInput').val().trim();
+        if(!address){
+          $('.yourStats, .userChart').hide();
+          $('#addressError').text('Please enter your wallet address.').show();
+          return;
+        }
         xhrAddressPoll = $.ajax({
             url: api + '/stats_address',
             data: {
@@ -550,6 +552,7 @@
                 $('#lookUp > span:first-child').show();
 
                 if (!data.stats){
+                    console.log("Stats data object was null");
                     $('.yourStats, .userChart').hide();
                     $('#addressError').text(data.error).show();
                     return;
@@ -588,16 +591,18 @@
                 //fetchAddressStats(true);
             },
             error: function(e){
-                if (e.statusText === 'abort')
+                if (e.statusText === 'abort'){
+                  console.log("Status text was abort");
                   return;
+                }
                 $('#addressError').text('Connection error').show();
 
-                if (addressTimeout)
+                if (addressTimeout){
                   clearTimeout(addressTimeout);
+                }
                 addressTimeout = setTimeout(function(){
                     fetchAddressStats(false);
                 }, 2000);
-
             }
         });
     }
