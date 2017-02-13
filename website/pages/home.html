@@ -134,7 +134,7 @@
     </div>
 
     <div class="col-md-4 stats marketRate">
-        <h3 id="marketHeader">Market Data.</h3>
+        <h3 id="marketHeader">Market Data</h3>
         <!--https://poloniex.com/public?command=returnTicker  Use for new stats-->
         <div class="marketFooter">Updated: <span id="marketLastUpdated"></span></div>
         <div class="marketFooter">Powered by <a href="https://poloniex.com">Poloniex</a></div>
@@ -465,9 +465,9 @@
 
           var $marketHeader = $('#marketHeader');
           $('.marketTicker').remove();
-          $marketHeader.after('<div class="marketTicker">' + 'USDT:BTC: <span>' + polodata.USDT_BTC.last + '</span></div>');
-          $marketHeader.after('<div class="marketTicker">' + 'BTC:XMR: <span>' + polodata.BTC_XMR.last + '</span></div>');
-          $marketHeader.after('<div class="marketTicker">' + 'USDT:XMR: <span>' + polodata.USDT_XMR.last + '</span></div>');
+          $marketHeader.after('<div class="marketTicker">' + 'BTC:USDT: <span>' + polodata.USDT_BTC.last + '</span></div>');
+          $marketHeader.after('<div class="marketTicker">' + 'XMR:BTC: <span>' + polodata.BTC_XMR.last + '</span></div>');
+          $marketHeader.after('<div class="marketTicker">' + 'XMR:USDT: <span>' + polodata.USDT_XMR.last + '</span></div>');
           $('#marketLastUpdated').timeago('update', new Date(marketTimestamp).toISOString());
           marketTimestamp = new Date();
         });
