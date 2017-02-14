@@ -366,7 +366,7 @@
             }
 
             if (lastStats.pool.lastBlockFound){
-                var d = new Date(parseInt(lastStats.pool.lastBlockFound)).toISOString();
+                var d = new Date(parseInt(lastStats.pool.stats.lastBlockFound)).toISOString();
                 $('#poolLastBlockFound').timeago('update', d);
             }
             else
