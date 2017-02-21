@@ -368,7 +368,7 @@
             }
 
             if (lastStats.pool.lastBlockFound){
-                var d = formatDate(parseInt(lastStats.pool.lastBlockFound));
+                var d = formatDate(parseInt(lastStats.pool.lastBlockFound)/1000);
                 $('#poolLastBlockFound').timeago('update', d);
             }
             else
