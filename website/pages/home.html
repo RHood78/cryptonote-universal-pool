@@ -131,6 +131,7 @@
         <div><i class="fa fa-users"></i> Connected Miners: <span id="poolMiners"></span></div>
         <div id="donations"><i class="fa fa-gift"></i> Donations: <span id="poolDonations"></span></div>
         <div><i class="fa fa-money"></i> Total Pool Fee: <span id="poolFee"></span></div>
+        <div><i class="fa fa-history"></i> Pool Blocks: <span id="totalBlocks"></span></div>
         <div><i class="fa fa-history"></i> Block Found Every: <span id="blockSolvedTime"></span> (est.)</div>
     </div>
 
@@ -366,12 +367,15 @@
               }
             }
 
-            if (lastStats.pool.stats.lastblockfound){
-                var d = formatDate(parseInt(lastStats.pool.stats.lastblockfound));
+            if (lastStats.pool.lastBlockfound){
+                var d = formatDate(parseInt(lastStats.pool.lastBlockfound));
                 $('#poolLastBlockFound').timeago('update', d);
             }
             else
                 $('#poolLastBlockFound').removeAttr('title').data('ts', '').update('Never');
+
+            if(lastStats.pool.stats.totalBlocks)
+                updateText('totalBlocks', lastStats.pool.stats.totalBlocks);
 
             //updateText('poolRoundHashes', lastStats.pool.roundHashes.toString());
             updateText('poolMiners', lastStats.pool.miners.toString());
