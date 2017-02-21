@@ -367,14 +367,14 @@
               }
             }
 
-            if (lastStats.pool.lastBlockfound){
-                var d = formatDate(parseInt(lastStats.pool.lastBlockfound));
+            if (lastStats.pool.lastBlockFound){
+                var d = formatDate(parseInt(lastStats.pool.lastBlockFound));
                 $('#poolLastBlockFound').timeago('update', d);
             }
             else
                 $('#poolLastBlockFound').removeAttr('title').data('ts', '').update('Never');
 
-            if(lastStats.pool.stats.totalBlocks)
+            if(lastStats.pool.totalBlocks)
                 updateText('totalBlocks', lastStats.pool.stats.totalBlocks);
 
             //updateText('poolRoundHashes', lastStats.pool.roundHashes.toString());
