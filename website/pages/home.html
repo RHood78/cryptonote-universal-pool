@@ -639,7 +639,7 @@
             var avgHash = calcAverageHashrate(userHashrates);
             userGraphStat['hashrate'].normalRangeMin = avgHash-10;
             userGraphStat['hashrate'].normalRangeMax = avgHash+10;
-            updateText('yourHashrateAvg', Math.round(avgHash));
+            updateText('yourHashrateAvg', Math.round(data.stats.usravg));
           }
           graphData = getGraphData(data['charts'][chart], chart == 'payments');
 			    userGraphStat[chart].tooltipValueLookups = {names: graphData.names};
