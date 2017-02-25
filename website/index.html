@@ -187,9 +187,7 @@
     }
 
 
-    function pulseLiveUpdate(){
-        var stats_update = document.getElementById('stats_updated');
-        function renderPayments(paymentsResults){
+    function renderPayments(paymentsResults){
 
         var $paymentsRows = $('#payments_rows');
 
@@ -224,6 +222,9 @@
 
         }
     }
+
+    function pulseLiveUpdate(){
+        var stats_update = document.getElementById('stats_updated');
         stats_update.style.transition = 'opacity 100ms ease-out';
         stats_update.style.opacity = 1;
         setTimeout(function(){
